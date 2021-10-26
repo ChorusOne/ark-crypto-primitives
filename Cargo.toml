@@ -15,20 +15,18 @@ edition = "2018"
 ################################# Dependencies ################################
 
 [dependencies]
-ark-ff = { version = "^0.3.0", default-features = false }
-ark-ec = { version = "^0.3.0", default-features = false }
-ark-std = { version = "^0.3.0", default-features = false }
-ark-relations = { version = "^0.3.0", default-features = false }
-ark-serialize = { version = "^0.3.0", default-features = false, features = [ "derive" ] }
-ark-sponge = { version = "^0.3.0", default-features = false }
+ark-std = {git = "https://github.com/ChorusOne/ark-std", branch = "giulio/random_feature", default-features = false} 
+ark-ff = {git = "https://github.com/ChorusOne/ark-algebra", branch = "giulio/random", default-features = false}
+ark-ec = {git = "https://github.com/ChorusOne/ark-algebra", branch = "giulio/random", default-features = false}
+ark-relations = {git = "https://github.com/ChorusOne/ark-snark", branch = "giulio/random", default-features = false }
+ark-serialize = {git = "https://github.com/ChorusOne/ark-algebra", branch = "giulio/random", default-features = false, features = ["derive"]}
+ark-sponge = { git = "https://github.com/ChorusOne/ark-sponge", branch = "giulio/random", default-features = false }
+ark-r1cs-std = { git = "https://github.com/ChorusOne/ark-r1cs-std", branch = "giulio/random", optional = true, default-features = false }
+ark-snark = {git = "https://github.com/ChorusOne/ark-snark", branch = "giulio/random", default-features = false }
+ark-nonnative-field = {git = "https://github.com/ChorusOne/ark-nonnative", branch = "giulio/random", optional = true, default-features = false }
 
 blake2 = { version = "0.9", default-features = false }
 digest = "0.9"
-
-ark-r1cs-std = { version = "^0.3.0", optional = true, default-features = false }
-ark-snark = { version = "^0.3.0", default-features = false }
-
-ark-nonnative-field = { version = "^0.3.0", optional = true, default-features = false }
 
 rayon = { version = "1.0", optional = true }
 derivative = { version = "2.0", features = ["use_core"] }
