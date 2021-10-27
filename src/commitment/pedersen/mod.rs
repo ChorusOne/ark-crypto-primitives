@@ -5,6 +5,7 @@ use ark_std::io::{Result as IoResult, Write};
 use ark_std::marker::PhantomData;
 use ark_std::rand::Rng;
 use ark_std::UniformRand;
+use ark_std::rand::distributions::{Standard, Distribution};
 
 use super::CommitmentScheme;
 
@@ -29,7 +30,8 @@ pub struct Commitment<C: ProjectiveCurve, W: Window> {
 #[derivative(Clone, PartialEq, Debug, Eq, Default)]
 pub struct Randomness<C: ProjectiveCurve>(pub C::ScalarField);
 
-impl<C: ProjectiveCurve> UniformRand for Randomness<C> {
+impl<C: ProjectiveCurve> UniformRand for Randomness<C>
+where Standard: Distribution<<C as ProjectiveCurve>::ScalarField> {
     #[inline]
     fn rand<R: Rng + ?Sized>(rng: &mut R) -> Self {
         Randomness(UniformRand::rand(rng))
@@ -42,7 +44,11 @@ impl<C: ProjectiveCurve> ToBytes for Randomness<C> {
     }
 }
 
-impl<C: ProjectiveCurve, W: Window> CommitmentScheme for Commitment<C, W> {
+impl<C: ProjectiveCurve, W: Window> CommitmentScheme for Commitment<C, W>
+where
+    ark_std::rand::distributions::Standard:
+        ark_std::rand::distributions::Distribution<Randomness<C>>,
+{
     type Parameters = Parameters<C>;
     type Randomness = Randomness<C>;
     type Output = C::Affine;

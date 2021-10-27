@@ -4,6 +4,7 @@ use ark_std::marker::PhantomData;
 use super::{pedersen, CommitmentScheme};
 pub use crate::crh::injective_map::InjectiveMap;
 use ark_ec::ProjectiveCurve;
+use ark_std::rand::distributions::{Distribution, Standard};
 use ark_std::rand::Rng;
 
 #[cfg(feature = "r1cs")]
@@ -17,6 +18,8 @@ pub struct PedersenCommCompressor<C: ProjectiveCurve, I: InjectiveMap<C>, W: ped
 
 impl<C: ProjectiveCurve, I: InjectiveMap<C>, W: pedersen::Window> CommitmentScheme
     for PedersenCommCompressor<C, I, W>
+where
+    Standard: Distribution<pedersen::Randomness<C>>,
 {
     type Output = I::Output;
     type Parameters = pedersen::Parameters<C>;
